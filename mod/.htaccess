@@ -1,0 +1,13 @@
+#Options +FollowSymLinks
+RewriteEngine On
+# обработка ошибки 404 — Not Found
+ErrorDocument 404 /error404
+# последовательность индексных файлов
+DirectoryIndex index.php?id=news
+# редирект с /index.php на /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
+RewriteRule ^index\.php$ / [R=301,L]
+# преобразование ЧПУ 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?id=$1 [L,QSA]
