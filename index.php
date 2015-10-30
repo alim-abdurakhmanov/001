@@ -18,13 +18,17 @@ function check($var)
 if (isset($_GET['id']))
 {
   include_once(TMPALATEPATH.'header.php');
-  if ($_GET['id']=='')
+  if ($_GET['id']=='orders')
   {
-	//include(MODPATH.'news.php');
+	   include(MODPATH.'orders.php');
   }
-	  else
+  elseif ($_GET['id']=='performers')
   {
-    echo "ГЛАВНАЯ";
+	   include(MODPATH.'performers.php');
+  }
+	else
+  {
+    include_once(MODPATH.'main.php');
    //ErrorPage404();
   }
   include_once(TMPALATEPATH.'footer.php');

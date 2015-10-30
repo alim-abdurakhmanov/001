@@ -13,10 +13,10 @@ define('UPLOAD_DIR', './upload/');
 define('UPDIR', '/upload/');
 define('ADMINURL', '/admin/admin.php');
 /** Имя базы данных для WordPress */
-define('DB_NAME', 'dboard');
+define('DB_NAME', 'Buildex');
 
 /** Имя пользователя MySQL */
-define('DB_USER', 'dboard');
+define('DB_USER', 'buildex');
 
 /** Пароль к базе данных MySQL */
 define('DB_PASSWORD', '123');
