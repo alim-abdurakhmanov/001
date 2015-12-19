@@ -3,7 +3,7 @@ RewriteEngine On
 # обработка ошибки 404 — Not Found
 ErrorDocument 404 /error404
 # последовательность индексных файлов
-DirectoryIndex index.php?id=news
+DirectoryIndex index.php?id=main
 # редирект с /index.php на /
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
 RewriteRule ^index\.php$ / [R=301,L]

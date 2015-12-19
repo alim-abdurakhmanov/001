@@ -1,4 +1,5 @@
 <?php
+		
 	function mysqlConnect()
 	{
 		$link=mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);	
@@ -75,8 +76,8 @@ function countCells($sql)
 	$res=mysql_numrows($res);
 	return $res;
 }
-/*	
-function writetoDB($sql)
+
+/*function writetoDB($sql)
 {
 	$link=mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 	mysql_select_db(DB_NAME,$link);
