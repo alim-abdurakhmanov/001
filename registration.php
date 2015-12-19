@@ -21,7 +21,8 @@
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php"); ?>
+<?php include("blocks/header-out.php");
+require_once(LIBPATH."db.php");?>
 <div class="clearfix"></div>
 <div id="titlebar" class="single submit-page">
 	<div class="container">
@@ -76,13 +77,11 @@
 											<div class="select">
 												<h5>Выберите те работы, которые выполняете</h5>
 												<select data-placeholder="Выберите из списка" class="chosen-select" multiple="" style="display: none;">
-													<option value="1">Категория 1</option>
-													<option value="2">Категория 2</option>
-													<option value="3">Категория 3</option>
-													<option value="4">Категория 4</option>
-													<option value="5">Категория 5</option>
-													<option value="6">Категория 6</option>
-													<option value="7">Категория 7</option>
+													<?$arr=SelectFromDBArray("SELECT * from categories");
+													foreach($arr as $value)
+													{?>
+														<option value="<?echo $value['id']?>"><?echo $value['first']?></option>
+												  <?}?>
 												</select>
 												<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
 											</div>
@@ -136,13 +135,11 @@
 											<div class="select">
 												<h5>Выберите те работы, которые выполняет компания</h5>
 												<select data-placeholder="Выберите из списка"  multiple name="workid[]" class="chosen-select" style="display: none;">
-													<option value="1">Категория 1</option>
-													<option value="2">Категория 2</option>
-													<option value="3">Категория 3</option>
-													<option value="4">Категория 4</option>
-													<option value="5">Категория 5</option>
-													<option value="6">Категория 6</option>
-													<option value="7">Категория 7</option>
+													<?$arr=SelectFromDBArray("SELECT * from categories");
+													foreach($arr as $value)
+													{?>
+														<option value="<?echo $value['id']?>"><?echo $value['first']?></option>
+												  <?}?>
 												</select>
 												<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
 											</div>
