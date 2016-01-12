@@ -22,7 +22,12 @@
 <!-- Header
 ================================================== -->
 <?php include("blocks/header-out.php");
-require_once(LIBPATH."db.php");?>
+require_once(LIBPATH."db.php");
+if(isset($_REQUEST['regid']))
+{
+	require_once(LIBPATH."linkgen.php");
+	activation($_REQUEST['regid']);
+}?>
 <div class="clearfix"></div>
 <div id="titlebar" class="single submit-page">
 	<div class="container">

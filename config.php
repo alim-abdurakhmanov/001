@@ -5,7 +5,7 @@ if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');	
 define('LIBPATH', ABSPATH.'lib/');
 define('MODPATH', ABSPATH.'mod/');
-define('TMPALATEPATH', ABSPATH.'html/');
+define('TMPALATEPATH', ABSPATH.'blocks/');
 date_default_timezone_set('Europe/Moscow');
 error_reporting(E_ALL);
 

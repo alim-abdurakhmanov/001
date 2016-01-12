@@ -1,6 +1,6 @@
 <?
  session_start();
-  require_once ('config.php');
+  include ('config.php');
  // require_once (SERVER.'/index.php');
   require_once (LIBPATH.'core.php');
   require_once (LIBPATH.'auth.php');  
@@ -19,7 +19,10 @@ if (isset($_GET['id']))
    {
         include('registration.php');
    }
-   
+    elseif ($_GET['id']=='myorders')
+   {
+        include('myorders.php');
+   }
    elseif ($_GET['id']=='add-order')
    {
         include('add-order.php');

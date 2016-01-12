@@ -1,15 +1,32 @@
-<?//Header авторизованого пользователя
+<?//выбор шапки для авторизованных пользователей
+require_once(LIBPATH."db.php");
 if(isset($_SESSION['userid']))
 {
-	echo "Вы вошли как: ";
-	$userid=$_SESSION['userid'];
-	include_once(MODPATH."userbar.php");
-	?>
-	<li><a href="personal">Личный кабинет</a>				
-	</li>				
-	<li><a href="exit">Выйти</a>				
-	</li>					
-<?
+	$id=$_SESSION['userid'];
+    if(!isset($_SESSION['type']))
+    {
+        $arr=SelectFirstFromDB("SELECT type from users where id=$id");
+        $_SESSION['type']=$arr['type'];
+    }
+    if($_SESSION['type']!=FALSE)
+    {
+        if($_SESSION['type']=="cust")
+        {
+            include(TMPALATEPATH."header-cl.php");
+        }
+        if($_SESSION['type']=="perf")
+        {
+            include(TMPALATEPATH."header-perf.php");
+        }
+        if($_SESSION['type']=="admin")
+        {
+             include(TMPALATEPATH."header-adm.php");
+        }        
+    }
+    else
+    {
+        ?><script>alert('Не указан тип пользователя, либо пользователя не существует!');</script><?
+    }
 }
 else{//Header неавторизованого пользователя
 ?>

@@ -82,10 +82,15 @@
 				<textarea  placeholder="Напишите все подробности заказа" value="" cols="40" rows="10"></textarea>
 			</div>
 			<div class="divider margin-top-0"></div>
-			
-			<a href="#" class="button big margin-top-5">Добавить заказ<i class="fa fa-arrow-circle-right"></i></a>
-			
-		</div>
+			<?if(isset($_SESSION['userid']) && $_SESSION['type']=="perf"){?>
+			     <a href="#" class="button big margin-top-5">Добавить заказ<i class="fa fa-arrow-circle-right"></i></a>
+		    <?}
+            else
+            {?>
+                <a href="#small-dialog" class="popup-with-zoom-anim button">Авторизуйтесь</a> как заказчик чтобы добавить заказ
+            <?}
+            ?>
+         </div>
 	
 							
 					

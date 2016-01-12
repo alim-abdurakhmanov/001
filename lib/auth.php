@@ -15,7 +15,8 @@ function auth_loginTo($login,$pass)
 
 function auth_logout()
 {
-	unset($_SESSION['userid']);	
+	unset($_SESSION['userid']);
+    unset($_SESSION['type']);
 }
 
 function auth_getUserId()
