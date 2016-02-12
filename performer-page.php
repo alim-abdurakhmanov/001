@@ -1,3 +1,4 @@
+<?session_start();?>
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
@@ -17,11 +18,26 @@
 </head>
 
 <body>
-<div id="wrapper">
+<div id="wrapper"> 
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php"); ?>
+<?php
+ include("blocks/header-out.php");
+ if(isset($_REQUEST['id']))
+ {  
+    $id=$_REQUEST['id'];  
+    $myrow=SelectFirstFromDB("SELECT * FROM users CROSS JOIN categories ON users.firstid = categories.id
+                                WHERE users.id =$id");
+
+    if(!isset($_SESSION['userid'])){
+                 $access=FALSE;?>
+             <span>
+                
+                 Чтобы видеть контакты исполнителей, пожалуйста, авторизуйтесь!</span>
+             <?}
+             else{$access=TRUE;}
+             ?>
 <div class="clearfix"></div>
 <div id="titlebar" class="resume">
 	<div class="container">
@@ -29,14 +45,16 @@
 			<div class="resume-titlebar">
 				<img src="images/avatar-placeholder.png" alt="">
 				<div class="resumes-list-content">
-					<h4>John Doe <span>Статус исполнителя</span></h4>
-					<span class="icons"><i class="fa fa-map-marker"></i> Регион</span>
-					<span class="icons"><i class="fa fa-user"></i> ФЛ или ЮЛ</span>
+					
+                    
+                    <h4><?echo $myrow["name"]; ?><span><?echo $myrow["busy"]; ?></span></h4>
+					<span class="icons"><i class="fa fa-map-marker"></i><?echo $myrow["region"]; ?></span>
+					<span class="icons"><i class="fa fa-user"></i><?if($myrow["whois"]=="FL"){echo "Юридическое лицо";} else{echo "Физическое лицо";}?></span>
 					<span class="icons"><a href="#"><i class="fa fa-link"></i> Сайт</a></span>
-					<span class="icons"><a href="mailto:john.doe@example.com"><i class="fa fa-envelope"></i> john.doe@example.com</a></span>
-					<span class="icons"><i class="fa fa-phone"></i> +7 (978) 111-11-11</span>
+					<span class="icons"><a href="mailto:john.doe@example.com"><i class="fa fa-envelope"></i><?if($access==TRUE){echo "+".$myrow["email"];}?></a></span>
+					<span class="icons"><i class="fa fa-phone"></i><?if($access==TRUE){echo "+".$myrow["phone"];}?></span>
 					<div class="skills">
-						<span>Вып. работа</span>
+						<span><?echo $myrow["first"]; ?></span>
 						<span>Вып. работа</span>
 						<span>Вып. работа</span>
 					</div>
@@ -47,7 +65,8 @@
 		</div>
 
 		<div class="six columns">
-			<div class="two-buttons">
+		<?if($access==TRUE){?>	
+            <div class="two-buttons">
 
 				<a href="#small-dialog1" class="popup-with-zoom-anim button"><i class="fa fa-envelope"></i> Отправить сообщение</a>
 
@@ -67,7 +86,7 @@
 					</div>
 					
 				</div>
-				
+			<?}?>
 
 
 			</div>
@@ -102,7 +121,11 @@
 
 
 </div>
-
+<?}
+else
+{
+    echo "<script>document.location.replace('/main');</script>";
+}?>
 
 
 </div>

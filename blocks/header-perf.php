@@ -1,4 +1,9 @@
 <header>
+<?  require_once(LIBPATH."db.php");
+    if(isset($_SESSION['userid'])) $id=$_SESSION['userid'];
+    $res=SelectFirstFromDB("SELECT * from users where id=$id");  
+    if($res!=false) $arr=$res;
+ ?>
 <div class="container" >
 	<div class="sixteen columns" >
 	
@@ -26,7 +31,7 @@
 			<ul class="responsive float-right">
 				
 				
-				<li class=""><a href="#" class="sf-with-ul"><i class="fa fa-user"></i>  Имя исполнителя</a>
+				<li class=""><a href="#" class="sf-with-ul"><i class="fa fa-user"></i><?if(isset($_SESSION['name'])) echo $_SESSION['name']; ?></a>
 					<ul style="display: none;">
 						<li><a href="#a" class="popup-with-zoom-anim button">Изменить ФИО/Название компании</a></li>
 						<div id="a" class="zoom-anim-dialog mfp-hide apply-popup">
@@ -35,9 +40,9 @@
 									</div>
 
 									<div class="small-dialog-content">
-										<form action="#" method="get" >
-											<input type="text"  value="Тут старое значение"/>
-
+										<form action="/redactor" method="get" >
+											<INPUT TYPE=hidden NAME=action VALUE="name">
+                                            <input type="text" name="name" value="<?if(!empty($arr['name'])) echo $arr['name'];?>"/>
 											<button class="send">Изменить</button>
 										</form>
 									</div>
@@ -74,12 +79,9 @@
 									</div>
 
 									<div class="small-dialog-content">
-										<form action="#" method="get" >
-											<input type="text" placeholder="Занят или свободен" value="Тут старое значение"/>
-										
-											
-													
-
+										<form action="/redactor" method="get" >
+											<INPUT TYPE=hidden NAME=action VALUE="busy">
+											<input type="text" name="busy" placeholder="Занят или свободен" value="<?if(!empty($arr['busy'])) echo $arr['busy'];?>"/>
 											<button class="send">Изменить</button>
 										</form>
 									</div>
@@ -92,12 +94,11 @@
 									</div>
 
 									<div class="small-dialog-content">
-										<form action="#" method="get" >
-											<input type="email" placeholder="Электронная почта" value="Старое значение e-mail"/>
-											<input type="text" placeholder="Контактный телефон" value="Старый номер телефона"/>
-											<input type="text" placeholder="Местоположение" value="Старое местоположение"/>
-											
-													
+										<form action="/redactor" method="get" >
+											<INPUT TYPE=hidden NAME=action VALUE="contacts">
+											<input type="email" name="email"  placeholder="Электронная почта"  value="<?if(!empty($arr['email'])) echo $arr['email'];?>"/>
+											<input type="text"  name="phone"  placeholder="Контактный телефон" value="<?if(!empty($arr['phone'])) echo "+".$arr['phone'];?>"/>
+											<input type="text"  name="region" placeholder="Местоположение"     value="<?if(!empty($arr['region'])) echo $arr['region'];?>"/>
 
 											<button class="send">Изменить</button>
 										</form>
@@ -111,12 +112,9 @@
 									</div>
 
 									<div class="small-dialog-content">
-										<form action="#" method="get" >
-											<input type="text" placeholder="Описание" value="Старое описание"/>
-											
-											
-													
-
+										<form action="/redactor" method="get" >
+											<INPUT TYPE=hidden NAME=action VALUE="description">
+											<input type="text" name="description" placeholder="Описание" value="<?if(!empty($arr['description'])) echo $arr['description'];?>"/>
 											<button class="send">Изменить</button>
 										</form>
 									</div>
@@ -129,11 +127,11 @@
 									</div>
 
 									<div class="small-dialog-content">
-										<form action="#" method="get" >
-											
-											<input type="password" placeholder="Старый пароль" value=""/>
-											<input type="password" placeholder="Новый пароль" value=""/>
-											<input type="password" placeholder="Подтвердите новый пароль" value=""/>
+										<form action="/redactor" method="get" >
+											<INPUT TYPE=hidden NAME=action VALUE="password">
+											<input name="oldpass" type="password" placeholder="Введите старый пароль" value=""/>
+											<input   type="password" placeholder="Новый пароль" value=""/>
+											<input name="pass"  type="password" placeholder="Подтвердите новый пароль" value=""/>
 											
 													
 

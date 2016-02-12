@@ -19,13 +19,37 @@ if (isset($_GET['id']))
    {
         include('registration.php');
    }
+   elseif ($_GET['id']=='order-page')
+   {
+        include('mod/order-page.php');
+   }
+   elseif ($_GET['id']=='myapplications')
+   {
+        include('/myapplications.php');
+   }
+   elseif ($_GET['id']=='delete')
+   {
+        include('mod/delete.php');
+   }
+   elseif ($_GET['id']=='applications')
+   {
+        include('mod/applications.php');
+   }
+   elseif ($_GET['id']=='redactor')
+   {
+        include('mod/redactor.php');
+   }
+    elseif ($_GET['id']=='pageoutput')
+   {
+        include('lib/pageoutput.php');
+   }
+   elseif ($_GET['id']=='orderwrite')
+   {
+        include('mod/orderwrite.php');
+   }
     elseif ($_GET['id']=='myorders')
    {
         include('myorders.php');
-   }
-   elseif ($_GET['id']=='add-order')
-   {
-        include('add-order.php');
    }
    elseif ($_GET['id']=='add-order')
    {

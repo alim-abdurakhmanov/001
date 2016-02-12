@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
 <head>
@@ -21,7 +21,21 @@
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php"); ?>
+<?php include("blocks/header-out.php"); 
+      include(LIBPATH."catfun.php");
+      if(isset($_REQUEST['orderid']))   
+      {
+          $orderid=$_REQUEST['orderid'];
+          $orderid = mysql_escape_string($orderid);
+          $userid=$_SESSION['userid'];
+          $userid = mysql_escape_string($userid);
+          $arr=SelectFirstFromDB("SELECT * FROM ads WHERE userid=$userid and id=$orderid");
+          if($arr==FALSE)
+          {
+              echo "<script>document.location.replace('/main');</script>";
+          }
+      }
+      ?>
 <div class="clearfix"></div>
 <div id="titlebar" class="single submit-page">
 	<div class="container">
@@ -36,7 +50,9 @@
 	
 	<!-- Submit Page -->
 	<div class="sixteen columns">
-		<div class="submit-page">
+		<form action="/orderwrite">
+        
+        <div class="submit-page">
 
 			<div class="notification notice closeable margin-bottom-40">
 				<p><span>Что дальше?</span> После добавления заказа исполнители будут оставлять заявки, и Вы сможете видеть их у себя в личном кабинете.</p>
@@ -44,63 +60,61 @@
 
 			<div class="form">
 				<h5>Название заказа</h5>
-				<input type="text" placeholder="Введите название">
+				<input type="text" name="title" value="<?if(isset($arr['title'])){echo $arr['title'];}?>" placeholder="Введите название">
 			</div>
 			<div class="form">
 				<h5>Регион заказа</h5>
-				<input class="search-field" type="text" placeholder="Введите название населенного пункта" value="">
+				<input class="search-field" type="text" name="region" placeholder="Введите название населенного пункта" value="<?if(isset($arr['region'])){echo $arr['region'];}?>">
 			</div>
 			<div class="form">
 				<h5>Контактный номер телефона</h5>
-				<input type="text" placeholder="+7(xxx)-xxx-xx-xx">
+				<input type="text" name="phone" value="<?if(isset($arr['phone'])){echo "+".$arr['phone'];}?>" placeholder="+7(xxx)-xxx-xx-xx">
 			</div>
 			<div class="form">
 				<div class="select">
 					<h5>Тип заказа</h5>
-					<select data-placeholder="Выберите из списка" class="chosen-select" multiple="" style="display: none;">
-						<option value="1">Категория 1</option>
-						<option value="2">Категория 2</option>
-						<option value="3">Категория 3</option>
-						<option value="4">Категория 4</option>
-						<option value="5">Категория 5</option>
-						<option value="6">Категория 6</option>
-						<option value="7">Категория 7</option>
+                    <select data-placeholder="Выберите из списка"  multiple name="catid[]" class="chosen-select" style="display: none;">
+													<?listcatout();?>
 					</select>
-					<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
+                    <div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
 				</div>
 			</div>
 			<div class="form">
 				<h5>Срок выполнения заказа</h5>
-				<input class="search-field" type="text" placeholder="С ... по ..." value="">
+				<input name="term" class="search-field" type="text" placeholder="С ... по ..." value="<?if(isset($arr['term'])){echo $arr['term'];}?>">
 			</div>
 			<div class="form">
 				<h5>Объем работы</h5>
-				<input class="search-field" type="password" placeholder="Введите объем работы" value="">
+				<input  class="search-field" type="password" value="<?if(isset($arr['workload'])){echo $arr['workload'];}?>" name="workload" placeholder="Введите объем работы" >
 			</div>
 			<div class="form">
 				<h5>Описание заказа</h5>
-				<textarea  placeholder="Напишите все подробности заказа" value="" cols="40" rows="10"></textarea>
+				<textarea  placeholder="Напишите все подробности заказа" name="adtext" value="<?if(isset($arr['adtext'])){echo $arr['adtext'];}?>" cols="40" rows="10"></textarea>
 			</div>
 			<div class="divider margin-top-0"></div>
-			<?if(isset($_SESSION['userid']) && $_SESSION['type']=="perf"){?>
-			     <a href="#" class="button big margin-top-5">Добавить заказ<i class="fa fa-arrow-circle-right"></i></a>
-		    <?}
+			<?
+            if(isset($_SESSION['userid']) && ($_SESSION['type']=="cust")){
+                if(!isset($arr)){
+                ?>
+                    <INPUT TYPE=hidden NAME=action VALUE="orderwrite">
+                    <input type="submit" class="button big margin-top-5" value="Добавить заказ"><i class="fa fa-arrow-circle-right"></i>
+		      <?}
+                else
+                {?>
+                    <INPUT TYPE=hidden NAME=action VALUE="orderred">
+                     <INPUT TYPE=hidden NAME=orderid VALUE="<?echo $orderid;?>">
+                    <input type="submit" class="button big margin-top-5" value="Редактировать"><i class="fa fa-arrow-circle-right"></i>
+              <?}  
+            }
             else
             {?>
                 <a href="#small-dialog" class="popup-with-zoom-anim button">Авторизуйтесь</a> как заказчик чтобы добавить заказ
-            <?}
+          <?}
             ?>
          </div>
-	
-							
-					
-			
-
-
-
-
 
 		</div>
+      </form>
 	</div>
 
 </div>

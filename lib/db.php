@@ -1,10 +1,9 @@
-<?php
-		
-	function mysqlConnect()
-	{
-		$link=mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);	
-	}
+<?php	
 	
+    function mysqlConnect()
+	{
+        $link=mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+    }
 	function mysqlisset($request)
 	{
 		$link=mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);

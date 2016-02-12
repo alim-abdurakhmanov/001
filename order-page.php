@@ -1,3 +1,4 @@
+<?session_start();?>
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
@@ -21,13 +22,26 @@
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php"); ?>
+<?php include("blocks/header-out.php");
+ if(isset($_REQUEST['id']))
+ { $id=$_REQUEST['id'];  
+    $myrow=SelectFirstFromDB("SELECT  * FROM ads  CROSS JOIN categories ON ads.firstid = categories.id CROSS JOIN users ON ads.userid=users.id
+                                WHERE ads.id =$id");
+
+    if(!isset($_SESSION['userid'])){
+                 $access=FALSE;?>
+             <span>
+                
+                 Чтобы видеть контакты исполнителей, пожалуйста, авторизуйтесь!</span>
+             <?}
+             else{$access=TRUE;}
+             ?>
 <div class="clearfix"></div>
 <div id="titlebar">
 	<div class="container">
 		<div class="ten columns">
-			<span> <i class="fa fa-calendar"> </i>  Дата добавления заказа</span>
-			<h2>Название заказа <span class="full-time"> Категория</span> <span class="full-time">Категория</span></h2>
+			<span> <i class="fa fa-calendar"> </i> <?echo $myrow["date"]; ?></span>
+			<h2><?echo $myrow["title"]; ?><span class="full-time"><?echo $myrow["first"]; ?></span> <span class="full-time">Категория</span></h2>
 		</div>
 
 		
@@ -39,7 +53,7 @@
 	<div class="eleven columns">
 	<div class="padding-right">
 		
-		<h4 class="margin-bottom-5">Описание заказа</h4>
+		<h4 class="margin-bottom-5"><?echo $myrow["description"]; ?></h4>
 		<p class="margin-reset">
 			The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
 		</p>
@@ -84,52 +98,54 @@
 						<i class="fa fa-map-marker"></i>
 						<div>
 							<strong>Местоположение:</strong>
-							<span>Тут местоположение</span>
+							<span><?if($access==TRUE) echo $myrow["region"]; ?></span>
 						</div>
 					</li>
 					<li>
 						<i class="fa fa-phone"></i>
 						<div>
 							<strong>Контактный номер заказчика:</strong>
-							<span>Тут номер</span>
+							<span><?if($access==TRUE) echo $myrow["phone"]; ?></span>
 						</div>
 					</li>
 					<li>
 						<i class="fa fa-envelope"></i>
 						<div>
 							<strong>E-mail заказчика:</strong>
-							<span>Тут мэйл</span>
+							<span><?if($access==TRUE) echo $myrow["email"]; ?></span>
 						</div>
 					</li>
 					<li>
 						<i class="fa fa-calculator"></i>
 						<div>
 							<strong>Объем работы:</strong>
-							<span>Тут объем работы</span>
+							<span><? echo $myrow["workload"]; ?></span>
 						</div>
 					</li>
 					<li>
 						<i class="fa fa-calendar-o"></i>
 						<div>
 							<strong>Сроки выполнения:</strong>
-							<span>Тут сроки выполнения</span>
+							<span><? echo $myrow["term"]; ?></span>
 						</div>
 					</li>
 				</ul>
 
-
-				<a href="#small-dialog2" class="popup-with-zoom-anim button">Оставить заявку</a>
-
+                <?
+				    if(isset($_SESSION['userid'])){ ?>
+                    <a href="#small-dialog2" class="popup-with-zoom-anim button">Оставить заявку</a>
+               
 				<div id="small-dialog2" class="zoom-anim-dialog apply-popup mfp-hide">
 					<div class="small-dialog-headline">
 						<h2>Оставить заявку к заказу</h2>
 					</div>
 
 					<div class="small-dialog-content">
-						<form action="#" method="post">
-							
-							<textarea placeholder="Можете оставить сообщение к заявке"></textarea>
-
+						<form action="applications" method="post">
+							<INPUT TYPE=hidden NAME="action" VALUE="appwrite">
+							<textarea NAME="text" placeholder="Можете оставить сообщение к заявке"></textarea>
+                            <INPUT TYPE=hidden NAME="adid" VALUE="<?echo $_REQUEST["id"];?>">
+                            <INPUT TYPE=hidden NAME="clid" VALUE="<?echo $_SESSION["userid"];?>">
 							
 							<div class="clearfix"></div>
 
@@ -139,7 +155,10 @@
 					</div>
 					
 				</div>
-
+               <?}
+               else{?><span>Авторизуйтесь, чтобы оставить заявку к заказу</span> <?}
+               ?>
+               
 			</div>
 
 		</div>
@@ -167,6 +186,11 @@
 <?php include("blocks/footer-out.php"); ?>
 <!-- Back To Top Button -->
 <div id="backtotop"><a href="index-4.html#"></a></div>
+<?}
+else
+{
+    echo "<script>document.location.replace('/main');</script>";
+}?>
 
 </div>
 <!-- Wrapper / End -->

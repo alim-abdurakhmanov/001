@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
-<head>
+<head> 
 <meta charset="utf-8">
 <title>Исполнители</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -21,13 +21,19 @@
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php"); ?>
+<?php include("blocks/header-out.php");
+    include(LIBPATH."perfpageoutput.php");?>
 <div class="clearfix"></div>
 <div id="titlebar">
 	<div class="container">
 		<div class="ten columns">
 			<h2>Исполнители</h2>
-			<span>Чтобы видеть контакты исполнителей, пожалуйста, зарегистрируйтесь!</span>
+			 <?if(!isset($_SESSION['type'])){
+                 $access=FALSE;?>
+             <span>Чтобы видеть контакты исполнителей, пожалуйста, авторизуйтесь!</span>
+             <?}
+             else{$access=TRUE;}
+             ?>
 		</div>
 
 		<!-- <div class="six columns">
@@ -43,16 +49,19 @@
 		
 		<ul class="resumes-list">
 
-			<li><a href="performer-page.php">
+	<?for ($i = 0; $i < $n; $i++)
+    {
+        $myrow = mysql_fetch_array($r);?>
+            <li><a href="performer-page.php?id=<?echo $myrow["id"];?>">
 				<img src="images/avatar-placeholder.png" alt="">
 				<div class="resumes-list-content">
-					<h4>John Doe <span>Статус исполнителя</span></h4>
-					<span><i class="fa fa-map-marker"></i> Регион</span>
-					<span><i class="fa fa-user"></i> ЮЛ или ФЛ</span>
+					<h4><?echo $myrow["name"]; ?><span><?echo $myrow["busy"];?></span></h4>
+					<span><i class="fa fa-map-marker"></i><?echo $myrow["region"];?></span>
+					<span><i class="fa fa-user"></i><?if($myrow["whois"]=="FL"){echo "Юридическое лицо";} else{echo "Физическое лицо";}?></span>
 					<p>Описание исполнителя.</p>
 
 					<div class="skills">
-						<span>Вып. работа</span>
+						<span><?echo $myrow["first"];?></span>
 						<span>Вып. работа</span>
 						<span>Вып. работа</span>
 					</div>
@@ -62,88 +71,44 @@
 				</a>
 				<div class="clearfix"></div>
 			</li>
-			
-			<li><a href="performer-page.php">
-				<img src="images/avatar-placeholder.png" alt="">
-				<div class="resumes-list-content">
-					<h4>John Doe <span>Статус исполнителя</span></h4>
-					<span><i class="fa fa-map-marker"></i> Регион</span>
-					<span><i class="fa fa-user"></i> ЮЛ или ФЛ</span>
-					<p>Описание исполнителя.</p>
-
-					<div class="skills">
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-					</div>
-					<div class="clearfix"></div>
-
-				</div>
-				</a>
-				<div class="clearfix"></div>
-			</li>
-			<li><a href="performer-page.php">
-				<img src="images/avatar-placeholder.png" alt="">
-				<div class="resumes-list-content">
-					<h4>John Doe <span>Статус исполнителя</span></h4>
-					<span><i class="fa fa-map-marker"></i> Регион</span>
-					<span><i class="fa fa-user"></i> ЮЛ или ФЛ</span>
-					<p>Описание исполнителя.</p>
-
-					<div class="skills">
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-					</div>
-					<div class="clearfix"></div>
-
-				</div>
-				</a>
-				<div class="clearfix"></div>
-			</li>
-			
-			<li><a href="performer-page.php">
-				<img src="images/avatar-placeholder.png" alt="">
-				<div class="resumes-list-content">
-					<h4>John Doe <span>Статус исполнителя</span></h4>
-					<span><i class="fa fa-map-marker"></i> Регион</span>
-					<span><i class="fa fa-user"></i> ЮЛ или ФЛ</span>
-					<p>Описание исполнителя.</p>
-
-					<div class="skills">
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
-					</div>
-					<div class="clearfix"></div>
-
-				</div>
-				</a>
-				<div class="clearfix"></div>
-			</li>
-
+    <?}?>	
 		</ul>
 		<div class="clearfix"></div>
 
 		<div class="pagination-container">
 			<nav class="pagination">
 				<ul>
-					<li><a href="#" class="current-page">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li class="blank">...</li>
-					<li><a href="#">8</a></li>
+                    <? if ($str-1 > 0){?><li><a href="performers?str=<?echo $str-2;?>"><?echo $str-1;?></a></li><?}?>
+                    <? if ($str > 0){?><li><a href="performers?str=<?echo $str-1;?>"><?echo $str;?></a></li><?}?>
+                    <li><a href="performers?str=<?echo $str;?>" class="current-page"><?echo $str+1;?></a></li>
+					<?if($start + 5 < $rec){?><li><a href="performers?str=<?echo $str+1;?>"><?echo $str+2;?></a></li><?}?>
+                    <?if($start + 10 < $rec){?><li><a href="performers?str=<?echo $str+2;?>"><?echo $str+3;?></a></li><?}?>
 				</ul>
 			</nav>
 
 			<nav class="pagination-next-prev">
 				<ul>
-					<li><a href="#" class="prev">Предыдущая</a></li>
-					<li><a href="#" class="next">Следующая</a></li>
+			<?   
+                if ($str > 0)
+                 {
+                    $p = $str - 1;
+                     if ($str-2 > 0){?><li><a class="prev" href="performers?str=<?echo $str-3;?>">В начало</a></li><?}
+                     ?><li><a href=performers?str=<?echo $p;?> class="prev">Предыдущая</a></li><?
+                  
+                 }
+		   
+                $str++;  // увеличиваем переменную $str на единицу;
+                // выводим ссылку на следующие пять записей, если она есть, 
+                // то есть число записей, которые нужно вывести,
+                 // и смещение не превышает общего числа записей
+		   
+                 if($start + 5 < $rec){
+                 ?><li><a href=performers?str=<?echo $str;?> class="next">Следующая</a></li><?}?>
+
 				</ul>
 			</nav>
 		</div>
-
+ 
 	</div>
 	</div>
 
@@ -151,20 +116,19 @@
 	
 	<div class="five columns">
 
-		<form action="#" method="post">
+		<form action="performers" method="post">
 
 		<div class="widget">
 			<h4>Выполняемые работы исполнителей</h4>
 
 		
-			<select data-placeholder="Выберите тип заказа" class="chosen-select" multiple="" style="display: none;">
-						<option value="1">Категория 1</option>
-						<option value="2">Категория 2</option>
-						<option value="3">Категория 3</option>
-						<option value="4">Категория 4</option>
-						<option value="5">Категория 5</option>
-						<option value="6">Категория 6</option>
-						<option value="7">Категория 7</option>
+			<select data-placeholder="Выберите тип заказа"  multiple name="category" class="chosen-select" style="display: none;">
+						  <?$arr=SelectFromDBArray("SELECT * from categories");
+    						foreach($arr as $value)
+							{?>
+								<option value="<?echo $value['id']?>"><?echo $value['first']?></option>
+						  <?}?>
+
 					</select>
 					<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
 
@@ -175,11 +139,13 @@
 			<h4>Местоположение исполнителей</h4>
 
 			
-			<select data-placeholder="Выберите регоин" class="chosen-select-no-single" style="display: none;">
-				<option  value="recent">Тут база регионов</option>
-
-			
-			</select>
+			<select data-placeholder="Выберите регион"  multiple name="region" class="chosen-select-no-single" style="display: none;">
+				 <?$arr=SelectFromDBArray("SELECT * from regions");
+    						foreach($arr as $value)
+							{?>
+								<option value="<?echo $value['id']?>"><?echo $value['region']?></option>
+						  <?}?>
+            </select>
 
 			
 				<br/><br/>

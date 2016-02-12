@@ -7,7 +7,9 @@ function auth_loginTo($login,$pass)
 		$res=SelectFirstFromDB($sql);
 		if($res)
 		{
-			$_SESSION['userid'] = $res['id'];			
+			$_SESSION['userid'] = $res['id'];
+            $_SESSION['name'] = $res['name'];
+            $_SESSION['type']= $res['type'];			
 			return TRUE;
 		}	
 	return false;
@@ -17,6 +19,7 @@ function auth_logout()
 {
 	unset($_SESSION['userid']);
     unset($_SESSION['type']);
+    unset($_SESSION['name']);
 }
 
 function auth_getUserId()

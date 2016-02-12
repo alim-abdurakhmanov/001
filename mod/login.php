@@ -21,16 +21,26 @@
 			elseif($status=="0")
 			{ 
 				$loginmsg="Ваш аккаунт не активирован, перейдите по ссылке указанной в письмо";
-			}
+			     $inComplit=false;
+                 auth_logout(); 
+            }
 			elseif($status=="1")
 			{ 
 				$loginmsg="Ваш аккаунт заблокирован, обратитесь в Поддержку.";
+                 $inComplit=false;
+                auth_logout();
 			}
-			else $loginmsg="Ваш аккаунт не активирован, перейдите по ссылке в сообщении 
-								отправленном при регистрации на указанный e-mail";
-		  }
+			else 
+            {   
+                $loginmsg="Ваш аккаунт не активирован, перейдите по ссылке в сообщении 
+						   отправленном при регистрации на указанный e-mail";
+                 $inComplit=false;
+                auth_logout();           
+            }
+          }
 		  else{
-			  $loginmsg="Неправильный логин или пароль!";
+			  $inComplit=false;
+              $loginmsg="Неправильный логин или пароль!";
 		  }
 		}
 	}	
@@ -43,7 +53,8 @@
 //echo $loginmsg;
 if($inComplit)
 {	
- echo "<script>document.location.replace('/main');</script>";
+    echo "<script>document.location.replace('/main');</script>";
 }else{
-	echo "<h1>$loginmsg</h1>";
+    ?><script>alert("<?echo "$loginmsg";?>");</script><?
+    echo "<script>document.location.replace('/main');</script>";
 }

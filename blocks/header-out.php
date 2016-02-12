@@ -1,4 +1,5 @@
 <?//выбор шапки для авторизованных пользователей
+require_once("/config.php");
 require_once(LIBPATH."db.php");
 if(isset($_SESSION['userid']))
 {

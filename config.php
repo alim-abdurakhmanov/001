@@ -1,5 +1,4 @@
 <?php
-	
 /** Абсолютный путь к директории  */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');	

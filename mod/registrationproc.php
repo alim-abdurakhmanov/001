@@ -58,8 +58,8 @@ if((!empty($_REQUEST['customer']) && $_REQUEST['customer']=="TRUE"))
 		if(!empty($_REQUEST['fio'])){ $fio=$_REQUEST['fio']; $fio=mysql_escape_string($fio);}
 		if(!empty($_REQUEST['email'])){ $email=$_REQUEST['email']; $email=mysql_escape_string($email);}
 		if(!empty($_REQUEST['pass'])){ $pass=$_REQUEST['pass']; $pass=mysql_escape_string($pass);$pass=sha1($pass);}
-		$sql="INSERT INTO users (fio, email, password, type, status, role)
-				VALUES ('$fio','$email','$pass', 'cust', '0', 'user');";
+		$sql="INSERT INTO users (fio, email, password, type, status, role,whois)
+				VALUES ('$fio','$email','$pass', 'cust', '0', 'user','FL');";
 			if(ExecFromDB($sql)==TRUE)
 			{
 				proc_actlink(mysql_insert_id());
@@ -75,8 +75,8 @@ if((!empty($_REQUEST['customer']) && $_REQUEST['customer']=="TRUE"))
 		if(!empty($_REQUEST['company'])){ $company=$_REQUEST['company']; $company=mysql_escape_string($company);}
 		if(!empty($_REQUEST['email'])){ $email=$_REQUEST['email']; $email=mysql_escape_string($email);}
 		if(!empty($_REQUEST['pass'])){ $pass=$_REQUEST['pass']; $pass=mysql_escape_string($pass);$pass=sha1($pass);}   
-		$sql="INSERT INTO users (name, email, password,type, status, role)
-				VALUES ('$company','$email','$pass', 'cust', '0', 'user');";
+		$sql="INSERT INTO users (name, email, password,type, status, role, whois)
+				VALUES ('$company','$email','$pass', 'cust', '0', 'user', 'UL');";
 			if(ExecFromDB($sql)==TRUE)
 			{
 				proc_actlink(mysql_insert_id());

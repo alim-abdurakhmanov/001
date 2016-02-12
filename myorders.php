@@ -21,7 +21,8 @@
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-cl.php"); ?>
+<?php include("blocks/header-cl.php");
+    include("mod/myorders.php"); ?>
 <div class="clearfix"></div>
 <div id="titlebar" class="single">
 	<div class="container">
@@ -42,7 +43,7 @@
 		<table class="manage-table responsive-table">
 
 			<tr>
-				<th><i class="fa fa-file-text"></i> Название заказа</th>
+				<th><i class="fa fa-file-text"></i>Название заказа</th>
 				<th><i class="fa fa-check-square-o"></i> Просмотры</th>
 				<th><i class="fa fa-calendar"></i> Дата</th>
 				<th><i class="fa fa-map-marker"></i> Местоположение</th>
@@ -51,52 +52,31 @@
 			</tr>
 					
 			<!-- Item #1 -->
-			<tr>
-				<td class="title"><a href="#">Название заказа 1</a></td>
-				<td class="centered">4</td>
-				<td>01.01.2015</td>
-				<td>Симферополь</td>
-				<td class="centered">-</td>
+			<?
+            if(isset($arr))
+            {
+                foreach($arr as $value){?>
+            <tr>
+				<td class="title"><a href="/order-page.php?id=<?if(isset($value['id'])){echo $value['id'];}?>"><?if(isset($value['title'])){echo $value['title'];}?></a></td>
+				<td class="centered"></td>
+				<td><?if(isset($value['date'])){echo $value['date'];}?></td>
+				<td><?if(isset($value['region'])){echo $value['region'];}?></td>
+				<td class="centered"><a href="myapplications?adid=<?if(isset($value['id'])){echo $value['id'];}?>" class="button">Показать (<?if(isset($value['applications'])){echo $value['applications'];}?>)</a></td>
+                <td class="centered">-</td>
 				<td class="action">
 					<a href="#"><i class="fa  fa-check "></i> Продлить</a>
-					<a href="#"><i class="fa fa-pencil"></i> Редактировать</a>				
-					<a href="#" class="delete"><i class="fa fa-remove"></i> Удалить</a>
+					<a href="add-order?orderid=<?if(isset($value['id'])){echo $value['id'];}?>"><i class="fa fa-pencil"></i> Редактировать</a>				
+					<a href="delete?action=orderdel&orderid=<?if(isset($value['id'])){echo $value['id'];}?>" class="delete"><i class="fa fa-remove"></i> Удалить</a>
 				</td>
 			</tr>
-					
-			<!-- Item #2 -->
-			<tr>
-				<td class="title"><a href="#">Название заказа 2</a></td>
-				<td class="centered">-</td>
-				<td>01.01.2015</td>
-				<td>Симферополь</td>
-				<td class="centered"><a href="applications.php" class="button">Показать (4)</a></td>
-				<td class="action">
-					<a href="#"><i class="fa  fa-check "></i> Продлить</a>
-					<a href="#"><i class="fa fa-pencil"></i> Редактировать</a>				
-					<a href="#" class="delete"><i class="fa fa-remove"></i> Удалить</a>
-				</td>
-			</tr>	
-
-			<!-- Item #2 -->
-				<tr>
-				<td class="title"><a href="#">Название заказа 3</a></td>
-				<td class="centered">23</td>
-				<td>01.01.2015</td>
-				<td>Симферополь</td>
-				<td class="centered"><a href="applications.php" class="button">Показать (2)</a></td>
-				<td class="action">
-					<a href="#"><i class="fa  fa-check "></i> Продлить</a>
-					<a href="#"><i class="fa fa-pencil"></i> Редактировать</a>				
-					<a href="#" class="delete"><i class="fa fa-remove"></i> Удалить</a>
-				</td>
-			</tr>
+            <?    }
+            }?>
 
 		</table>
 
 
 		<br>
-		<a href="#" class="button">Добавить заказ</a>
+		<a href="add-order" class="button">Добавить заказ</a>
 
 	</div>
 

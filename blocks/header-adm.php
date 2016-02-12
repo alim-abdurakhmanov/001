@@ -11,7 +11,7 @@
 		<nav id="navigation" class="menu">
 			<ul id="responsive">
 
-				<li><a href="index">Главная</a>
+				<li><a href="main">Главная</a>
 					
 				</li>
 				<li><a href="orders">Заказы</a>
@@ -24,9 +24,9 @@
 			</ul>
 			
 			<ul class="responsive float-right">
+				<h2>Я админ</h2>
 				
-				
-				<li class=""><a href="#" class="sf-with-ul"><i class="fa fa-user"></i>  Имя исполнителя</a>
+				<li class=""><a href="#" class="sf-with-ul"><i class="fa fa-user"></i><?if(isset($_SESSION['name'])) echo $_SESSION['name']; ?></a>
 					<ul style="display: none;">
 						<li><a href="#a" class="popup-with-zoom-anim button">Изменить ФИО/Название компании</a></li>
 						<div id="a" class="zoom-anim-dialog mfp-hide apply-popup">
@@ -146,7 +146,7 @@
 					</ul>
 				</li>
 				
-				<li><a href="#"><i class="fa fa-sign-out"></i> Выйти из профиля</a></li>
+				<li><a href="/exit"><i class="fa fa-sign-out"></i> Выйти из профиля</a></li>
 				
 			</ul>
 
