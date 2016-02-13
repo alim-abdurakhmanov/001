@@ -58,7 +58,7 @@
 					<h4><?echo $myrow["name"]; ?><span><?echo $myrow["busy"];?></span></h4>
 					<span><i class="fa fa-map-marker"></i><?echo $myrow["region"];?></span>
 					<span><i class="fa fa-user"></i><?if($myrow["whois"]=="FL"){echo "Юридическое лицо";} else{echo "Физическое лицо";}?></span>
-					<p>Описание исполнителя.</p>
+					<p><?echo $myrow["description"];?>.</p>
 
 					<div class="skills">
 						<span><?echo $myrow["first"];?></span>
@@ -143,7 +143,7 @@
 				 <?$arr=SelectFromDBArray("SELECT * from regions");
     						foreach($arr as $value)
 							{?>
-								<option value="<?echo $value['id']?>"><?echo $value['region']?></option>
+								<option value="<?echo $value['id'];?>"><?echo $value['region'];?></option>
 						  <?}?>
             </select>
 

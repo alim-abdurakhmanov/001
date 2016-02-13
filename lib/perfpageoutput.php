@@ -56,9 +56,10 @@ else
 $start = $str * $sum;
 		   
 // запрос 
-if(isset($_REQUEST['region'])&& isset($_REQUEST['category']))
+if(isset($_REQUEST['region']) && isset($_REQUEST['category']))
 {
-     $r = mysql_query("SELECT * FROM (users CROSS JOIN categories ON users.firstid = categories.id)
+     $r = mysql_query("SELECT users.id, users.name, users.status, users.whois, users.busy, categories.first,  regions.region, users.description
+                    FROM (users CROSS JOIN categories ON users.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=users.regionid
                          where users.regionid=$reg and users.firstid=$cat LIMIT $start, $sum");
 
@@ -66,13 +67,15 @@ if(isset($_REQUEST['region'])&& isset($_REQUEST['category']))
 
 elseif(isset($_REQUEST['category']))
 {
-       $r = mysql_query("SELECT * FROM (users CROSS JOIN categories ON users.firstid = categories.id)
+       $r = mysql_query("SELECT users.id, users.name, users.status, users.whois, users.busy, categories.first,  regions.region, users.description
+       FROM (users CROSS JOIN categories ON users.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=users.regionid
                          where users.firstid=$cat");
 }
 elseif(isset($_REQUEST['region']))
 {
-     $r = mysql_query("SELECT * FROM (users CROSS JOIN categories ON users.firstid = categories.id)
+     $r = mysql_query("SELECT users.id, users.name, users.status, users.whois, users.busy, categories.first,  regions.region, users.description
+                         FROM (users CROSS JOIN categories ON users.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=users.regionid
                          where users.regionid=$reg LIMIT $start, $sum");
 
@@ -81,7 +84,8 @@ elseif(isset($_REQUEST['region']))
 
 else
 {
-    $r = mysql_query("SELECT * FROM (users CROSS JOIN categories ON users.firstid = categories.id) CROSS JOIN regions ON regions.id=users.regionid LIMIT $start, $sum");
+    $r = mysql_query("SELECT users.id, users.name, users.status, users.whois, users.busy, categories.first,  regions.region, users.description
+     FROM (users CROSS JOIN categories ON users.firstid = categories.id) CROSS JOIN regions ON regions.id=users.regionid LIMIT $start, $sum");
     
 }
 /*if(!isset($_REQUEST['category']))

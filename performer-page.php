@@ -24,10 +24,11 @@
 ================================================== -->
 <?php
  include("blocks/header-out.php");
- if(isset($_REQUEST['id']))
+ if(isset($_REQUEST['id'])) 
  {  
     $id=$_REQUEST['id'];  
-    $myrow=SelectFirstFromDB("SELECT * FROM users CROSS JOIN categories ON users.firstid = categories.id
+    $myrow=SelectFirstFromDB("SELECT * FROM (users CROSS JOIN categories ON users.firstid = categories.id)
+                                CROSS JOIN regions ON regions.id=users.regionid
                                 WHERE users.id =$id");
 
     if(!isset($_SESSION['userid'])){
@@ -55,8 +56,6 @@
 					<span class="icons"><i class="fa fa-phone"></i><?if($access==TRUE){echo "+".$myrow["phone"];}?></span>
 					<div class="skills">
 						<span><?echo $myrow["first"]; ?></span>
-						<span>Вып. работа</span>
-						<span>Вып. работа</span>
 					</div>
 					<div class="clearfix"></div>
 

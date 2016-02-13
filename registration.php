@@ -81,11 +81,11 @@ if(isset($_REQUEST['regid']))
 										<div class="form">
 											<div class="select">
 												<h5>Выберите те работы, которые выполняете</h5>
-												<select data-placeholder="Выберите из списка" class="chosen-select" multiple="" style="display: none;">
+												<select data-placeholder="Выберите из списка" class="chosen-select" multiple name="workid" style="display: none;">
 													<?$arr=SelectFromDBArray("SELECT * from categories");
 													foreach($arr as $value)
 													{?>
-														<option value="<?echo $value['id']?>"><?echo $value['first']?></option>
+														<option value="<?echo $value['id'];?>"><?echo $value['first'];?></option>
 												  <?}?>
 												</select>
 												<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
@@ -93,7 +93,13 @@ if(isset($_REQUEST['regid']))
 										</div>
 										<div class="form">
 											<h5>Регион, в котором Вы работаете</h5>
-											<input name="region" class="search-field" type="text" placeholder="Введите название населенного пункта" value="">
+										<select data-placeholder="Выберите регион"  multiple name="region" class="chosen-select-no-single" style="display: none;">
+				                             <?$arr=SelectFromDBArray("SELECT * from regions");
+    						                   foreach($arr as $value)
+							                   {?>
+								                    <option value="<?echo $value['id'];?>"><?echo $value['region'];?></option>
+						                     <?}?>
+                                        </select>
 											
 										</div>
 										<div class="form">
@@ -143,7 +149,7 @@ if(isset($_REQUEST['regid']))
 													<?$arr=SelectFromDBArray("SELECT * from categories");
 													foreach($arr as $value)
 													{?>
-														<option value="<?echo $value['id']?>"><?echo $value['first']?></option>
+														<option value="<?echo $value['id'];?>"><?echo $value['first'];?></option>
 												  <?}?>
 												</select>
 												<div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
@@ -151,7 +157,13 @@ if(isset($_REQUEST['regid']))
 										</div>
 										<div class="form">
 											<h5>Регион, в котором Вы работаете</h5>
-											<input name="region" class="search-field" name="region" type="text" placeholder="Введите название населенного пункта" value="">
+											<select data-placeholder="Выберите регион"  multiple name="region" class="chosen-select-no-single" style="display: none;">
+				                             <?$arr=SelectFromDBArray("SELECT * from regions");
+    						                   foreach($arr as $value)
+							                   {?>
+								                    <option value="<?echo $value['id'];?>"><?echo $value['region'];?></option>
+						                     <?}?>
+                                        </select>
 											<INPUT TYPE=hidden NAME="performer" VALUE="TRUE">
 										</div>
 										<div class="form">

@@ -29,7 +29,7 @@
           $orderid = mysql_escape_string($orderid);
           $userid=$_SESSION['userid'];
           $userid = mysql_escape_string($userid);
-          $arr=SelectFirstFromDB("SELECT * FROM ads WHERE userid=$userid and id=$orderid");
+          $arr=SelectFirstFromDB("SELECT * FROM  ads WHERE userid=$userid and id=$orderid");
           if($arr==FALSE)
           {
               echo "<script>document.location.replace('/main');</script>";
@@ -63,18 +63,25 @@
 				<input type="text" name="title" value="<?if(isset($arr['title'])){echo $arr['title'];}?>" placeholder="Введите название">
 			</div>
 			<div class="form">
-				<h5>Регион заказа</h5>
-				<input class="search-field" type="text" name="region" placeholder="Введите название населенного пункта" value="<?if(isset($arr['region'])){echo $arr['region'];}?>">
-			</div>
-			<div class="form">
-				<h5>Контактный номер телефона</h5>
-				<input type="text" name="phone" value="<?if(isset($arr['phone'])){echo "+".$arr['phone'];}?>" placeholder="+7(xxx)-xxx-xx-xx">
+				<div class="select">
+                <h5>Регион заказа</h5>
+				<select data-placeholder="Выберите из списка"  multiple name="region" class="chosen-select" style="display: none;">
+													<?if(isset($arr['regionid'])){$regionid=$arr['regionid'];}
+                                                      else $regionid="";
+                                                    regionsout($regionid);?>
+			    </select>
+                <div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
+				</div>
+                
+               <?// <input class="search-field" type="text" name="region" placeholder="Введите название населенного пункта" value="<?if(isset($arr['region'])){echo $arr['region'];}">?>
 			</div>
 			<div class="form">
 				<div class="select">
 					<h5>Тип заказа</h5>
-                    <select data-placeholder="Выберите из списка"  multiple name="catid[]" class="chosen-select" style="display: none;">
-													<?listcatout();?>
+                    <select data-placeholder="Выберите из списка"  multiple name="catid" class="chosen-select" style="display: none;">
+													<?if(isset($arr['firstid'])){$catid=$arr['firstid'];}
+                                                      else $catid="";
+                                                    listcatout($catid);?>
 					</select>
                     <div class="chosen-container chosen-container-multi" style="width: 100%;" title=""><!-- <ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose Categories" class="default" autocomplete="off" style="width: 149px;"></li></ul> --><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
 				</div>

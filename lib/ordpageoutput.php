@@ -46,7 +46,8 @@ $start = $str * $sum;
 // запрос 
 if(isset($_REQUEST['region'])&& isset($_REQUEST['category']))
 {
-     $r = mysql_query("SELECT * FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
+     $r = mysql_query("SELECT ads.id, ads.firstid, ads.title, ads.adtext,  ads.date, categories.first, regions.region
+                        FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=ads.regionid
                          where ads.regionid=$reg and ads.firstid=$cat LIMIT $start, $sum");
 
@@ -54,13 +55,15 @@ if(isset($_REQUEST['region'])&& isset($_REQUEST['category']))
 
 elseif(isset($_REQUEST['category']))
 {
-       $r = mysql_query("SELECT * FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
+       $r = mysql_query("SELECT ads.id, ads.firstid, ads.title, ads.adtext,  ads.date, categories.first, regions.region
+                        FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=ads.regionid
                          where ads.firstid=$cat");
 }
 elseif(isset($_REQUEST['region']))
 {
-     $r = mysql_query("SELECT * FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
+     $r = mysql_query("SELECT ads.id, ads.firstid, ads.title, ads.adtext,  ads.date, categories.first, regions.region
+                        FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
                          CROSS JOIN regions ON regions.id=ads.regionid
                          where ads.regionid=$reg LIMIT $start, $sum");
 
@@ -69,7 +72,8 @@ elseif(isset($_REQUEST['region']))
 
 else
 {
-    $r = mysql_query("SELECT * FROM (ads CROSS JOIN categories ON ads.firstid = categories.id) CROSS JOIN regions ON regions.id=ads.regionid LIMIT $start, $sum");
+    $r = mysql_query("SELECT ads.id, ads.firstid, ads.title, ads.adtext,  ads.date, categories.first, regions.region
+                        FROM (ads CROSS JOIN categories ON ads.firstid = categories.id) CROSS JOIN regions ON regions.id=ads.regionid LIMIT $start, $sum");
     
 }
 $n = mysql_num_rows($r); // возвращаем число рядов результата запроса

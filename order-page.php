@@ -4,7 +4,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Страница заказа</title>
+<title>Страница исполнителя</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <!-- CSS
@@ -18,14 +18,18 @@
 </head>
 
 <body>
-<div id="wrapper">
+<div id="wrapper"> 
 
 <!-- Header
 ================================================== -->
-<?php include("blocks/header-out.php");
- if(isset($_REQUEST['id']))
- { $id=$_REQUEST['id'];  
-    $myrow=SelectFirstFromDB("SELECT  * FROM ads  CROSS JOIN categories ON ads.firstid = categories.id CROSS JOIN users ON ads.userid=users.id
+<?php
+ include("blocks/header-out.php");
+ if(isset($_REQUEST['id'])) 
+ {  
+    $id=$_REQUEST['id'];  
+    $myrow=SelectFirstFromDB("SELECT * FROM (ads CROSS JOIN categories ON ads.firstid = categories.id)
+                                CROSS JOIN regions ON regions.id=ads.regionid
+                                CROSS JOIN users ON users.id=ads.userid
                                 WHERE ads.id =$id");
 
     if(!isset($_SESSION['userid'])){
@@ -35,13 +39,13 @@
                  Чтобы видеть контакты исполнителей, пожалуйста, авторизуйтесь!</span>
              <?}
              else{$access=TRUE;}
-             ?>
+ }           ?>
 <div class="clearfix"></div>
 <div id="titlebar">
 	<div class="container">
 		<div class="ten columns">
 			<span> <i class="fa fa-calendar"> </i> <?echo $myrow["date"]; ?></span>
-			<h2><?echo $myrow["title"]; ?><span class="full-time"><?echo $myrow["first"]; ?></span> <span class="full-time">Категория</span></h2>
+			<h2><?echo $myrow["title"]; ?><span class="full-time"><?echo $myrow["first"]; ?></span></h2>
 		</div>
 
 		
@@ -53,7 +57,7 @@
 	<div class="eleven columns">
 	<div class="padding-right">
 		
-		<h4 class="margin-bottom-5"><?echo $myrow["description"]; ?></h4>
+		<h4 class="margin-bottom-5"><?echo $myrow["adtext"]; ?></h4>
 		<p class="margin-reset">
 			The Food Service Specialist ensures outstanding customer service is provided to food customers and that all food offerings meet the required stock levels and presentation standards. Beginning your career as a Food Steward will give you a strong foundation in Speedway’s food segment that can make you a vital member of the front line team!
 		</p>
@@ -144,7 +148,7 @@
 						<form action="applications" method="post">
 							<INPUT TYPE=hidden NAME="action" VALUE="appwrite">
 							<textarea NAME="text" placeholder="Можете оставить сообщение к заявке"></textarea>
-                            <INPUT TYPE=hidden NAME="adid" VALUE="<?echo $_REQUEST["id"];?>">
+                            <INPUT TYPE=hidden NAME="adid" VALUE="<?echo $myrow["id"];?>">
                             <INPUT TYPE=hidden NAME="clid" VALUE="<?echo $_SESSION["userid"];?>">
 							
 							<div class="clearfix"></div>
@@ -186,8 +190,8 @@
 <?php include("blocks/footer-out.php"); ?>
 <!-- Back To Top Button -->
 <div id="backtotop"><a href="index-4.html#"></a></div>
-<?}
-else
+<?
+if(!isset($_REQUEST['id']))
 {
     echo "<script>document.location.replace('/main');</script>";
 }?>

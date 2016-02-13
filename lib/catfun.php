@@ -28,13 +28,35 @@ function maincatout()
 }
 
 //<br /><b>Notice</b>:  Undefined index: term in <b>D:\OpenServer\domains\buildex-des.ru\add-order.php</b> on line <b>85</b><br />
-function listcatout()
+function regionsout($regid)
 {
-   $res=SelectFromDBArray("SELECT * from categories");
-foreach($res as $value)
-{?>
-									
-            <option value="<?echo $value['id'];?>"><?echo $value['first'];?></option>
-<?}
+   $res=SelectFromDBArray("SELECT * from  regions");
+    foreach($res as $value)
+    {        if($regid==$value['id'])
+             {?>
+                 <option selected value="<?echo $value['id'];?>"><?echo $value['region'];?></option>
+             <?}
+             else
+             {?>					
+                <option value="<?echo $value['id'];?>"><?echo $value['region'];?></option>
+           <?}
+    }
 }  
   
+  function listcatout($regid)
+{
+   $res=SelectFromDBArray("SELECT * from categories");
+   
+			foreach($res as $value)
+            {        
+             if($regid==$value['id'])
+                {?>
+                 <option selected value="<?echo $value['id'];?>"><?echo $value['first'];?></option>
+            <?}
+             else
+             {?>					
+                <option value="<?echo $value['id'];?>"><?echo $value['first'];?></option>
+           <?}
+             }
+    
+}  
